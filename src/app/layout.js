@@ -1,5 +1,4 @@
-import dns from 'node:dns';
-dns.setServers(['8.8.8.8', '8.8.4.4']);
+
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import Navbar from "@/components/Navbar";
