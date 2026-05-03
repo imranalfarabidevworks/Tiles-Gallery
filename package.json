@@ -35,5 +35,19 @@
     "install": "^0.13.0",
     "postcss": "^8.5.13",
     "tailwindcss": "^3.4.19"
-  }
+  },
+  "description": "::- Tiles Gallery\r Tiles Gallery is a premium web application built for discovering and exploring high-quality tiles. It provides a seamless experience for users to browse architectural designs with a modern dark aesthetic.",
+  "main": "postcss.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/imranalfarabidevworks/Tiles-Gallery.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/imranalfarabidevworks/Tiles-Gallery/issues"
+  },
+  "homepage": "https://github.com/imranalfarabidevworks/Tiles-Gallery#readme"
 }
