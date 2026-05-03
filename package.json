@@ -2,6 +2,7 @@
   "name": "tiles-gallery",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -32,20 +33,17 @@
     "daisyui": "^4.12.24",
     "eslint": "^9",
     "eslint-config-next": "^15.5.15",
-    "install": "^0.13.0",
     "postcss": "^8.5.13",
     "tailwindcss": "^3.4.19"
   },
   "description": "::- Tiles Gallery\r Tiles Gallery is a premium web application built for discovering and exploring high-quality tiles. It provides a seamless experience for users to browse architectural designs with a modern dark aesthetic.",
-  "main": "postcss.config.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/imranalfarabidevworks/Tiles-Gallery.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Imran Al Farabi",
   "license": "ISC",
-  "type": "commonjs",
   "bugs": {
     "url": "https://github.com/imranalfarabidevworks/Tiles-Gallery/issues"
   },
