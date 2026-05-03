@@ -1,36 +1,24 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+::- Tiles Gallery
+Tiles Gallery is a premium web application built for discovering and exploring high-quality tiles. It provides a seamless experience for users to browse architectural designs with a modern dark aesthetic.
 
-## Getting Started
+::- Features
+Modern UI: Designed with a professional dark theme using Tailwind CSS and DaisyUI.
 
-First, run the development server:
+Dynamic Showcase: Features an animated hero carousel and scrolling announcements.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Advanced Search: Real-time filtering system to find tiles by name or category.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Secure Auth: Integrated BetterAuth for Google and Email/Password login.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+User Management: Private profile pages where users can view and update their information.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Responsive: Fully optimized for mobile, tablet, and desktop screens.
 
-## Learn More
+::- Tech Stack
+Frontend: Next.js 15 (App Router)
 
-To learn more about Next.js, take a look at the following resources:
+Database: MongoDB Atlas
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Authentication: BetterAuth
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Styling: Tailwind CSS & DaisyUI
