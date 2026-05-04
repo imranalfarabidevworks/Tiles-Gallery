@@ -1,4 +1,4 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "https://demo-data-9dgl.onrender.com";
 
 export async function getAllTiles() {
   const res = await fetch(`${API_URL}/tiles`, { cache: "no-store" });

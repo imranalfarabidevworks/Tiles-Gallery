@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
-
 import { useSession } from "@/lib/auth-client";
 import Link from "next/link";
 import Loader from "@/components/Loader";
@@ -18,15 +17,35 @@ export default function TileDetailPage() {
       router.push("/login");
       return;
     }
+
     if (session) {
-      fetch(process.env.NEXT_PUBLIC_API_URL + "/tiles/" + id)
-        .then((r) => { if (!r.ok) throw new Error("Not found"); return r.json(); })
-        .then((data) => { setTile(data); setLoading(false); })
-        .catch(() => setLoading(false));
+      // পরিবর্তন: সরাসরি /tiles.json ফেচ করে আইডি দিয়ে খুঁজে বের করা
+      fetch("/tiles.json")
+        .then((r) => {
+          if (!r.ok) throw new Error("File not found");
+          return r.json();
+        })
+        .then((data) => {
+          // যদি ডেটার ভেতর tiles অ্যারে থাকে সেটি নাও, নাহলে সরাসরি ডেটা নাও
+          const allTiles = Array.isArray(data.tiles) ? data.tiles : data;
+          
+          // URL-এর id-র সাথে JSON-এর id মিলিয়ে দেখা হচ্ছে (String এ রূপান্তর করে)
+          const foundTile = allTiles.find((t) => String(t.id || t._id) === String(id));
+          
+          if (foundTile) {
+            setTile(foundTile);
+          }
+          setLoading(false);
+        })
+        .catch((err) => {
+          console.error("Detail Fetch Error:", err);
+          setLoading(false);
+        });
     }
   }, [id, session, isPending, router]);
 
   if (isPending || loading) return <Loader />;
+
   if (!tile) return (
     <div className="min-h-[60vh] flex flex-col items-center justify-center">
       <p className="font-heading text-charcoal/40 text-3xl mb-4">Tile Not Found</p>
@@ -42,7 +61,7 @@ export default function TileDetailPage() {
       </Link>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-        {/* Image */}
+        {/* Image Section */}
         <div className="space-y-4">
           <div className="relative rounded-sm overflow-hidden aspect-square bg-[#EDE4D6]">
             <img src={tile.image} alt={tile.title} className="w-full h-full object-cover" />
@@ -52,6 +71,7 @@ export default function TileDetailPage() {
               </span>
             </div>
           </div>
+          
           {/* Mini info cards */}
           <div className="grid grid-cols-3 gap-3">
             {[
@@ -61,26 +81,26 @@ export default function TileDetailPage() {
             ].map((item) => (
               <div key={item.label} className="bg-white border border-[#DDD0BC] rounded-sm p-3 text-center">
                 <p className="text-xs text-stone uppercase tracking-wider mb-1">{item.label}</p>
-                <p className="text-charcoal font-semibold text-sm capitalize">{item.value}</p>
+                <p className="text-charcoal font-semibold text-sm capitalize">{item.value || "N/A"}</p>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Details */}
+        {/* Details Section */}
         <div>
           <span className="text-terracotta text-xs uppercase tracking-[0.3em] font-medium">{tile.category}</span>
           <h1 className="font-heading text-charcoal text-3xl md:text-4xl font-bold mt-2 mb-2">{tile.title}</h1>
-          <p className="text-stone text-sm mb-6">By <span className="text-charcoal font-medium">{tile.creator}</span></p>
+          <p className="text-stone text-sm mb-6">By <span className="text-charcoal font-medium">{tile.creator || "Tiles Gallery"}</span></p>
 
           <div className="flex items-baseline gap-2 mb-8">
             <span className="font-heading text-terracotta text-4xl font-bold">${tile.price}</span>
-            <span className="text-stone text-sm">{tile.currency} / unit</span>
+            <span className="text-stone text-sm">{tile.currency || "USD"} / unit</span>
           </div>
 
           <div className="mb-8">
             <h3 className="text-xs uppercase tracking-widest text-stone font-medium mb-3">Style Description</h3>
-            <p className="text-charcoal/80 leading-relaxed text-sm border-l-2 border-clay pl-4">{tile.style}</p>
+            <p className="text-charcoal/80 leading-relaxed text-sm border-l-2 border-clay pl-4">{tile.style || "No style description available."}</p>
           </div>
 
           <div className="mb-8">
@@ -88,20 +108,24 @@ export default function TileDetailPage() {
             <p className="text-charcoal/70 leading-relaxed text-sm">{tile.description}</p>
           </div>
 
-          <div className="mb-8">
-            <h3 className="text-xs uppercase tracking-widest text-stone font-medium mb-3">Tags</h3>
-            <div className="flex flex-wrap gap-2">
-              {tile.tags?.map((tag) => (
-                <span key={tag} className="bg-[#EDE4D6] text-charcoal text-xs px-3 py-1.5 rounded-sm border border-[#DDD0BC]">
-                  #{tag}
-                </span>
-              ))}
+          {tile.tags && tile.tags.length > 0 && (
+            <div className="mb-8">
+              <h3 className="text-xs uppercase tracking-widest text-stone font-medium mb-3">Tags</h3>
+              <div className="flex flex-wrap gap-2">
+                {tile.tags.map((tag) => (
+                  <span key={tag} className="bg-[#EDE4D6] text-charcoal text-xs px-3 py-1.5 rounded-sm border border-[#DDD0BC]">
+                    #{tag}
+                  </span>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
           <div className="flex gap-3">
-            <button className={`flex-1 py-3.5 rounded-sm text-sm uppercase tracking-widest font-medium transition-colors ${tile.inStock ? "bg-terracotta hover:bg-stone text-cream" : "bg-[#DDD0BC] text-stone cursor-not-allowed"}`}
-              disabled={!tile.inStock}>
+            <button 
+              className={`flex-1 py-3.5 rounded-sm text-sm uppercase tracking-widest font-medium transition-colors ${tile.inStock ? "bg-terracotta hover:bg-stone text-white" : "bg-[#DDD0BC] text-stone cursor-not-allowed"}`}
+              disabled={!tile.inStock}
+            >
               {tile.inStock ? "Add to Enquiry" : "Out of Stock"}
             </button>
             <button className="border border-[#DDD0BC] hover:border-terracotta text-charcoal hover:text-terracotta px-4 py-3.5 rounded-sm transition-colors">
