@@ -35,14 +35,14 @@ export default function HomePage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // ডাটা ফেচ করার লজিক
+  
     fetch("/tiles.json")
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch");
         return res.json();
       })
       .then((data) => {
-        // যদি data.tiles নামে অ্যারে থাকে তবে সেটি ৪টি স্লাইস করে দেখাবে
+      
         if (data && Array.isArray(data.tiles)) {
           setTiles(data.tiles.slice(0, 4));
         } else if (Array.isArray(data)) {
@@ -109,11 +109,10 @@ export default function HomePage() {
 
 
 {/* ── Marquee ── */}
-<div className="bg-[#1A1A1A] py-4 border-y border-[#DDD0BC]/20"> {/* একটু ডার্ক শেড দিলাম */}
+{/* <div className="bg-[#1A1A1A] py-4 border-y border-[#DDD0BC]/20">
   <Marquee
     gradient={false}
-    speed={40} // স্পিড একটু কমিয়েছি রিডেবিলিটির জন্য
-    pauseOnHover={true}
+    speed={40} 
     className="text-[#DDD0BC] text-[10px] sm:text-xs uppercase tracking-[0.2em] font-medium"
   >
     {[
@@ -127,11 +126,11 @@ export default function HomePage() {
     ].map((text, i) => (
       <span key={i} className="mx-10 flex items-center">
         {text}
-        <span className="text-[#C84C31] mx-6">◆</span> {/* Terracotta কালার হাইলাইট */}
+        <span className="text-[#C84C31] mx-6">◆</span> 
       </span>
     ))}
   </Marquee>
-</div>
+</div> */}
       {/* ── Stats Section ── */}
       <section className="bg-[#EDE4D6] py-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

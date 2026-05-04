@@ -19,17 +19,17 @@ export default function TileDetailPage() {
     }
 
     if (session) {
-      // পরিবর্তন: সরাসরি /tiles.json ফেচ করে আইডি দিয়ে খুঁজে বের করা
+      
       fetch("/tiles.json")
         .then((r) => {
           if (!r.ok) throw new Error("File not found");
           return r.json();
         })
         .then((data) => {
-          // যদি ডেটার ভেতর tiles অ্যারে থাকে সেটি নাও, নাহলে সরাসরি ডেটা নাও
+          
           const allTiles = Array.isArray(data.tiles) ? data.tiles : data;
           
-          // URL-এর id-র সাথে JSON-এর id মিলিয়ে দেখা হচ্ছে (String এ রূপান্তর করে)
+          
           const foundTile = allTiles.find((t) => String(t.id || t._id) === String(id));
           
           if (foundTile) {
